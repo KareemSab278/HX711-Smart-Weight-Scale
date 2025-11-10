@@ -23,10 +23,10 @@ const float W = 230.0f;
 const float D = 150.0f;
 
 // Grid sections
-const char *grid[3][3] = {
-    {"G7", "H8", "I9"},
-    {"D4", "E5", "F6"},
-    {"A1", "B2", "C3"}};
+const char *productGrid[3][3] = {
+    {"G7 - cola 330 ml", "H8 diet cola 330 ml", "I9 fanta 330 ml"},
+    {"D4 - pepsi max cherry 330 ml", "E5 - lucozade orange 330 ml", "F6 - vimto 330 ml"},
+    {"A1 - soda can 330 ml", "B2 - soda can 330 ml", "C3 - soda can 330 ml"}};
 
 // Pinout: share SCK, separate DOUT
 const int PIN_SCK = 3;
@@ -191,7 +191,7 @@ void loop()
   //   Serial.print(cur.P, 1);
   //   Serial.print(" g  x=");
   //   Serial.print(cur.x, 1);
-  //   Serial.print(" mm  y=");
+  //   Serial.print(" mm  y="); 
   //   Serial.print(cur.y, 1);
   //   Serial.println(" mm");
   // }

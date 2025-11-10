@@ -119,13 +119,13 @@ void displayPostitionInTerminalAsGrid(float W, float D)
 
   const int gridWidth = int(W) / 10;
   const int gridHeight = int(D) / 10;
-  char grid[gridWidth][gridHeight];
+  char productGrid[gridWidth][gridHeight];
 
   for (int i = 0; i < gridHeight; i++)
   {
     for (int j = 0; j < gridWidth; j++)
     {
-      grid[i][j] = '.';
+      productGrid[i][j] = '.';
     }
   }
 
@@ -133,7 +133,7 @@ void displayPostitionInTerminalAsGrid(float W, float D)
   {
     int gridX = constrain(static_cast<int>((r.x / W) * gridWidth), 0, gridWidth - 1);
     int gridY = constrain(static_cast<int>((r.y / D) * gridHeight), 0, gridHeight - 1);
-    grid[gridY][gridX] = 'X'; // Mark position with 'X'
+    productGrid[gridY][gridX] = 'X'; // Mark position with 'X'
   }
 
   Serial.println("Weight Position Grid:");
@@ -141,7 +141,7 @@ void displayPostitionInTerminalAsGrid(float W, float D)
   {
     for (int j = 0; j < gridWidth; j++)
     {
-      Serial.print(grid[i][j]);
+      Serial.print(productGrid[i][j]);
     }
     Serial.println();
   }
@@ -195,7 +195,7 @@ void matrixGrid(float W, float D)
     int sectionY = (r.y < D / 3) ? 0 : (r.y < 2 * D / 3) ? 1
                                                          : 2;
     Serial.print("POSITION: ");
-    Serial.println(grid[sectionY][sectionX]);
+    Serial.println(productGrid[sectionY][sectionX]);
   }
   else
   {
@@ -224,17 +224,26 @@ void findRemovedItemPosition(float dTotal)
     int sectionY = (y_event < D / 3) ? 0 : (y_event < 2 * D / 3) ? 1
                                                                  : 2;
 
-    Serial.println("----- EVENT -----");
-    Serial.print("Diff mass (g): ");
-    Serial.println(dTotal, 1);
-    Serial.print("Event x (mm):  ");
-    Serial.println(x_event, 1);
-    Serial.print("Event y (mm):  ");
-    Serial.println(y_event, 1);
-    Serial.println(dTotal < 0 ? "Removal" : "Addition");
-    Serial.print("Event position: ");
-    Serial.println(grid[sectionY][sectionX]);
-    Serial.println("-----------------");
+    // Serial.println("----- EVENT -----");
+    // Serial.print("Diff mass (g): ");
+    // Serial.println(dTotal, 1);
+    // Serial.print("Event x (mm):  ");
+    // Serial.println(x_event, 1);
+    // Serial.print("Event y (mm):  ");
+    // Serial.println(y_event, 1);
+    // Serial.println(dTotal < 0 ? "Removal" : "Addition");
+    // Serial.print("Event position: ");
+    // Serial.println(productGrid[sectionY][sectionX]);
+    // Serial.println("-----------------");
+
+    // output as json stringified formar
+    Serial.print("{\"grams\":");
+    Serial.print(dTotal, 1);
+    Serial.print(",\"product\":\"");
+    Serial.print(productGrid[sectionY][sectionX]);
+    Serial.print("\",\"event\":\"");
+    Serial.print(dTotal < 0 ? "Removal" : "Addition");
+    Serial.println("\"}");
 
     // Reset baseline
     before = lastStable;
