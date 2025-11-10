@@ -183,16 +183,16 @@ void loop()
   // Telemetry every ~200 ms
   static unsigned long t0 = 0;
 
-  if (millis() - t0 > 1000)
-  {
-    t0 = millis();
-    matrixGrid(W, D);
-    Serial.print("P=");
-    Serial.print(cur.P, 1);
-    Serial.print(" g  x=");
-    Serial.print(cur.x, 1);
-    Serial.print(" mm  y=");
-    Serial.print(cur.y, 1);
-    Serial.println(" mm");
-  }
+  // if (millis() - t0 > 1000)
+  // {
+  //   t0 = millis();
+  //   matrixGrid(W, D);
+  //   Serial.print("P=");
+  //   Serial.print(cur.P, 1);
+  //   Serial.print(" g  x=");
+  //   Serial.print(cur.x, 1);
+  //   Serial.print(" mm  y=");
+  //   Serial.print(cur.y, 1);
+  //   Serial.println(" mm");
+  // }
 }
