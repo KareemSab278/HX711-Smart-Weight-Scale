@@ -237,12 +237,12 @@ void findRemovedItemPosition(float dTotal)
     // Serial.println("-----------------");
 
     // output as json stringified formar
-    Serial.print("{\"grams\":");
+    Serial.print("{\"grms\":");
     Serial.print(dTotal, 1);
-    Serial.print(",\"product\":\"");
+    Serial.print(",\"prod\":\"");
     Serial.print(productGrid[sectionY][sectionX]);
-    Serial.print("\",\"event\":\"");
-    Serial.print(dTotal < 0 ? "Removal" : "Addition");
+    Serial.print("\",\"action\":\"");
+    Serial.print(dTotal < 0 ? "take" : "put");
     Serial.println("\"}");
 
     // Reset baseline

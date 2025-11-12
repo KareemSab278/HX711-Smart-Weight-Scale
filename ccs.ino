@@ -24,9 +24,9 @@ const float D = 150.0f;
 
 // Grid sections
 const char *productGrid[3][3] = {
-    {"G7 - cola 330 ml", "H8 diet cola 330 ml", "I9 fanta 330 ml"},
-    {"D4 - pepsi max cherry 330 ml", "E5 - lucozade orange 330 ml", "F6 - vimto 330 ml"},
-    {"A1 - soda can 330 ml", "B2 - soda can 330 ml", "C3 - soda can 330 ml"}};
+    {"G7", "H8", "I9"},
+    {"D4", "E5", "F6"},
+    {"A1", "B2", "C3"}};
 
 // Pinout: share SCK, separate DOUT
 const int PIN_SCK = 3;
