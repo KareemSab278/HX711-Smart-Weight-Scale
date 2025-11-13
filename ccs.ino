@@ -12,7 +12,7 @@ long readRawAvg(HX711 &hx);
 float toGrams(long raw, long tare, float scale);
 void cornerCal(const char *name, HX711 &hx, long &tare, float &scale, float known_g);
 void getWeight();
-void displayPostitionInTerminalAsGrid(float W, float D);
+// void displayPostitionInTerminalAsGrid(float W, float D);
 void matrixGrid(float W, float D);
 void findRemovedItemPosition(float dTotal);
 
@@ -41,7 +41,7 @@ HX711 hx1, hx2, hx3, hx4;
 const int AVG_N = 1;
 const float CHANGE_THRESH_G = 40.0f;
 const float STABLE_DB_G = 5.0f; // “no change” band for stability
-const unsigned long SETTLE_TIME_MS = 800;
+const unsigned long SETTLE_TIME_MS = 100; // faster reactions 400 miliseconds
 
 // ---------- Persistent calibration storage
 struct CalData

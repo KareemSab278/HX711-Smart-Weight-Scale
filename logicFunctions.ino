@@ -108,76 +108,6 @@ void cornerCal(const char *name, HX711 &hx, long &tare, float &scale, float know
   waitForEnter("Remove the mass from the plate");
 }
 
-void displayPostitionInTerminalAsGrid(float W, float D)
-{
-  Reading r = getReading();
-  Serial.print("Position (x,y): ");
-  Serial.print(r.x, 1);
-  Serial.print(" mm, ");
-  Serial.print(r.y, 1);
-  Serial.println(" mm");
-
-  const int gridWidth = int(W) / 10;
-  const int gridHeight = int(D) / 10;
-  char productGrid[gridWidth][gridHeight];
-
-  for (int i = 0; i < gridHeight; i++)
-  {
-    for (int j = 0; j < gridWidth; j++)
-    {
-      productGrid[i][j] = '.';
-    }
-  }
-
-  if (!isnan(r.x) && !isnan(r.y))
-  {
-    int gridX = constrain(static_cast<int>((r.x / W) * gridWidth), 0, gridWidth - 1);
-    int gridY = constrain(static_cast<int>((r.y / D) * gridHeight), 0, gridHeight - 1);
-    productGrid[gridY][gridX] = 'X'; // Mark position with 'X'
-  }
-
-  Serial.println("Weight Position Grid:");
-  for (int i = 0; i < gridHeight; i++)
-  {
-    for (int j = 0; j < gridWidth; j++)
-    {
-      Serial.print(productGrid[i][j]);
-    }
-    Serial.println();
-  }
-
-  // Get current reading
-  Reading cur = getReading();
-
-  // Simple stability detection
-  static Reading last = cur;
-  static unsigned long lastChange = millis();
-
-  float dP = fabs(cur.P - last.P);
-  if (dP > STABLE_DB_G)
-  {
-    lastChange = millis();
-  }
-  if (millis() - lastChange > SETTLE_TIME_MS)
-  {
-    lastStable = cur;
-  }
-  last = cur;
-
-  if (!haveBefore)
-  {
-    before = lastStable;
-    haveBefore = true;
-  }
-
-  float dTotal = lastStable.P - before.P;
-
-  // Display current weight
-  Serial.print("P=");
-  Serial.print(cur.P, 1);
-  Serial.println("g");
-}
-
 void matrixGrid(float W, float D)
 {
   const int gridWidth = int(W);
@@ -249,3 +179,74 @@ void findRemovedItemPosition(float dTotal)
     before = lastStable;
   }
 }
+
+// CODE GRAVEYARD
+
+// void displayPostitionInTerminalAsGrid(float W, float D)
+// {
+//   Reading r = getReading();
+//   Serial.print("Position (x,y): ");
+//   Serial.print(r.x, 1);
+//   Serial.print(" mm, ");
+//   Serial.print(r.y, 1);
+//   Serial.println(" mm");
+
+//   const int gridWidth = int(W) / 10;
+//   const int gridHeight = int(D) / 10;
+//   char productGrid[gridWidth][gridHeight];
+
+//   for (int i = 0; i < gridHeight; i++)
+//   {
+//     for (int j = 0; j < gridWidth; j++)
+//     {
+//       productGrid[i][j] = '.';
+//     }
+//   }
+
+//   if (!isnan(r.x) && !isnan(r.y))
+//   {
+//     int gridX = constrain(static_cast<int>((r.x / W) * gridWidth), 0, gridWidth - 1);
+//     int gridY = constrain(static_cast<int>((r.y / D) * gridHeight), 0, gridHeight - 1);
+//     productGrid[gridY][gridX] = 'X'; // Mark position with 'X'
+//   }
+
+//   Serial.println("Weight Position Grid:");
+//   for (int i = 0; i < gridHeight; i++)
+//   {
+//     for (int j = 0; j < gridWidth; j++)
+//     {
+//       Serial.print(productGrid[i][j]);
+//     }
+//     Serial.println();
+//   }
+
+//   // Get current reading
+//   Reading cur = getReading();
+
+//   // Simple stability detection
+//   static Reading last = cur;
+//   static unsigned long lastChange = millis();
+
+//   float dP = fabs(cur.P - last.P);
+//   if (dP > STABLE_DB_G)
+//   {
+//     lastChange = millis();
+//   }
+//   if (millis() - lastChange > SETTLE_TIME_MS)
+//   {
+//     lastStable = cur;
+//   }
+//   last = cur;
+
+//   if (!haveBefore)
+//   {
+//     before = lastStable;
+//     haveBefore = true;
+//   }
+
+//   float dTotal = lastStable.P - before.P;
+
+//   Serial.print("P=");
+//   Serial.print(cur.P, 1);
+//   Serial.println("g");
+// }
